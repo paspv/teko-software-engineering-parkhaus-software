@@ -1,0 +1,39 @@
+:root {
+    font-family: sans-serif;
+
+    --black: #000000;
+    --light-gray: #d4d4d4;
+
+
+    --transition: 0.2s ease-out;
+}
+
+.parking-garage-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100dvh;
+
+
+    ul {
+        list-style: none;
+        padding: 0;
+        width: min(100%, 20em);
+    }
+
+    li {
+        a {
+            display: block;
+            padding: 1rem;
+            box-shadow: 0 0 1px var(--black);
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: var(--black);
+            transition: var(--transition);
+            &:hover {
+                background-color: var(--light-gray);
+            }
+        }
+    }
+}
