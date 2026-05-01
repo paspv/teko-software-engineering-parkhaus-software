@@ -1,0 +1,18 @@
+{
+    "name": "pascal/parking-garage",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pascal Blaser",
+            "email": "pascal.blaser@edu.teko.ch"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
