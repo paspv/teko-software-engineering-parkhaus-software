@@ -8,23 +8,30 @@ class ParkingGarageController extends BaseController
 {    
     public function entrance($vars) 
     {
-        if (
-            !array_key_exists('garageId', $vars)
-            || !is_int($vars['garageId'])
-            ) {
-                header("HTTP/1.0 400 Bad Request");
-                echo "400 - Bad Request";
-                return;
+        if (!$this->ensureRequiredParam('garageId', $vars)) {
+            return;
         }
 
         $garageId = $vars["garageId"];
 
-        $service = new ParkingGarageService();
-        $garage = $service->getById();
+        $garageService = new ParkingGarageService();
+        $garage = $garageService->getById($garageId);
+
+        // var_dump($_COOKIE);
+        // $ticketService = new TicketService();
+        // $ticket = $ticketService->getById($garageId);
         
         $this->render('entrance', [
-            parking
+            "garage" => $garage,
+            // "ticket" => $ticket
         ]);
+    }
+
+    public function printTicket() 
+    {
+        //create ticket
+
+        // print 
     }
     
     public function exit($vars) 

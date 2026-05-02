@@ -4,24 +4,17 @@
 
 
 <?php
-/** @var string $name */
-/** @var array $garages */
+/** @var TicketModel $ticket */
+/** @var ParkingGarageModel $garage */
 ?>
 
-<div class="parking-garage-selection">
-    <h3>Alle Parkhäuser:</h3>
-    <ul class="parking-garage-seleciton-list">
-        <?php if (empty($garages)): ?>
-            <li>Es wurden keine Parkhäuser gefunden.</li>
-        <?php else: ?>
-
-            <?php foreach ($garages as $garage): ?>
-                <li>
-                    <a href="/<?= $garage->Id ?>/entry"><?= $garage->Name ?></a>
-                </li>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </ul>
+<div class="content-center-outer">
+    <div class="content-center entrance">
+        <form method="post" action="/<?= $garage->id ?>/printTicket">
+            <input name="action" value="getTicket" type="hidden" />
+            <button class="big-red">Ticket</button>
+        </form>
+    </div>
 </div>
 
 

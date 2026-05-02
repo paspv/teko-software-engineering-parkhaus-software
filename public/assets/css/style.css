@@ -1,29 +1,88 @@
+/* variables */
 :root {
     font-family: sans-serif;
 
     --black: #000000;
     --light-gray: #d4d4d4;
-
+    --typst-blue: #0074D9;
+    --white: white;
+    --red: #dd2b0f;
+    --red-hover: #ad230e;
 
     --transition: 0.2s ease-out;
 }
 
-.parking-garage-selection {
+/* styling reset */
+html,
+body,
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+/* basic styling */
+
+header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: var(--typst-blue);
+    padding: 1.25rem 2rem;
+    color: var(--white);
+
+    a {
+
+        color: var(--white);
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .right {
+        text-align: right;
+    }
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.content-center-outer {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     height: 100dvh;
+    color: var(--white);
 
+    .content-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+/* page content blocks */
+
+.garage-list {
+    width: min(100%, 20em);
+    background-color: var(--typst-blue);
+    padding: 20px;
+    border-radius: 10px;
 
     ul {
-        list-style: none;
-        padding: 0;
-        width: min(100%, 20em);
+        width: 100%;
     }
 
     li {
         a {
+            background-color: white;
             display: block;
             padding: 1rem;
             box-shadow: 0 0 1px var(--black);
@@ -31,9 +90,29 @@
             text-decoration: none;
             color: var(--black);
             transition: var(--transition);
+            border-radius: 5px;
+
             &:hover {
                 background-color: var(--light-gray);
             }
+        }
+    }
+}
+
+.entrance {
+    .big-red {
+        aspect-ratio: 1;
+        width: 16rem;
+        background-color: var(--red);
+        border: none;
+        border-radius: 100%;
+        font-size: 4rem;
+        color: var(--white);
+        text-transform: uppercase;
+        transition: var(--transition);
+
+        &:hover {
+            background-color: var(--red-hover);
         }
     }
 }

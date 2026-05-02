@@ -4,7 +4,7 @@ namespace App\Services;
 
 use PDO;
 use App\Core\Database;
-use App\Models\ParkingGarages;
+use PDOStatement;
 
 class BaseService 
 {
@@ -19,10 +19,28 @@ class BaseService
         $this->tableName = $tableName;
     }
 
-    function getAll() 
+    public function getAll(): ?array
     {
-        return $this->db
+        return $this->fetchAll(
+            $this->db
             ->query("SELECT * FROM " . $this->tableName )
-            ->fetchAll(PDO::FETCH_CLASS, $this->modelClass);
+        );
+    }
+
+    public function getById(int $id): ?object
+    {
+        return $this->fetchOne(
+            $this->db->query("SELECT * FROM {$this->tableName} WHERE ID = {$id}")
+        );
+    }
+
+    private function fetchAll(PDOStatement $query): ?array
+    {
+        return $query->fetchAll(PDO::FETCH_CLASS, $this->modelClass);
+    }
+
+    private function fetchOne(PDOStatement $query): ?object
+    {
+        return $query->fetchObject($this->modelClass);
     }
 }

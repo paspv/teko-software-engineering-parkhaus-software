@@ -32,6 +32,7 @@ class App
 
         // Garage Routes
         $router->add('/{garageId}/entry', [ParkingGarageController::class, 'entrance']);
+        $router->add('/{garageId}/printTicket', [ParkingGarageController::class, 'printTicket']);
         $router->add('/{garageId}/exit', [ParkingGarageController::class, 'exit']);
 
         // Report Routes

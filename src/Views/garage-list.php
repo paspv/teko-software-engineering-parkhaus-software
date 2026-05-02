@@ -5,20 +5,22 @@
 /** @var array $garages */
 ?>
 
-<div class="parking-garage-selection">
-    <h3>Alle Parkhäuser:</h3>
-    <ul class="parking-garage-seleciton-list">
-        <?php if (empty($garages)): ?>
-            <li>Es wurden keine Parkhäuser gefunden.</li>
-        <?php else: ?>
+<div class="content-center-outer">
+    <div class="content-center garage-list">
+        <span class="title">Alle Parkhäuser:</span>
+        <ul class="parking-garage-seleciton-list">
+            <?php if (empty($garages)): ?>
+                <li>Es wurden keine Parkhäuser gefunden.</li>
+            <?php else: ?>
 
-            <?php foreach ($garages as $garage): ?>
-                <li>
-                    <a href="/<?= $garage->Id ?>/entry"><?= $garage->Name ?></a>
-                </li>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </ul>
+                <?php foreach ($garages as $garage): ?>
+                    <li>
+                        <a href="/<?= $garage->id ?>/entry"><?= $garage->name ?></a>
+                    </li>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </ul>
+    </div>
 </div>
 
 
