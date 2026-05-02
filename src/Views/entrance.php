@@ -1,5 +1,8 @@
 <?php include __DIR__ . '/layout/html_head.php'; ?>
 
+<?php include __DIR__ . '/layout/header.php'; ?>
+
+
 <?php
 /** @var string $name */
 /** @var array $garages */

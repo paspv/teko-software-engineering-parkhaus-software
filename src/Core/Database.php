@@ -4,10 +4,12 @@ namespace App\Core;
 use PDO;
 use Exception;
 
-class Database {
+class Database 
+{
     private static $instance = null;
 
-    public static function getConnection(): PDO {
+    public static function getConnection(): PDO 
+    {
         if (self::$instance === null) {
             try {
                 $host = $_ENV['DB_HOST'];

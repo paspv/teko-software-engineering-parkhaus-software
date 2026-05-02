@@ -6,7 +6,8 @@ use PDO;
 use App\Core\Database;
 use App\Models\ParkingGarages;
 
-class BaseService {
+class BaseService 
+{
     private PDO $db;
     private $modelClass = "";
     private $tableName = "";
@@ -18,7 +19,8 @@ class BaseService {
         $this->tableName = $tableName;
     }
 
-    function getAll() {
+    function getAll() 
+    {
         return $this->db
             ->query("SELECT * FROM " . $this->tableName )
             ->fetchAll(PDO::FETCH_CLASS, $this->modelClass);

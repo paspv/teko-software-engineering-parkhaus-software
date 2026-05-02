@@ -1,10 +1,12 @@
 <?php
 namespace App\Core;
 
-class Router {
+class Router 
+{
     protected $routes = [];
 
-    public function add($route, $params) {
+    public function add($route, $params) 
+    {
         // 1. Escape slashes
         $pattern = str_replace('/', '\/', $route);
         // 2. Convert {vars} to named regex capture groups
@@ -15,7 +17,8 @@ class Router {
         $this->routes[$pattern] = $params;
     }
 
-    public function dispatch($uri) {
+    public function dispatch($uri) 
+    {
         $path = parse_url($uri, PHP_URL_PATH);
         $path = rtrim($path, '/') ?: '/';
 

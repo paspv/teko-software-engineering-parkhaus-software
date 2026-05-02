@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-class ParkingGarage {
+class ParkingGarage 
+{
     public int $Id;
     public string $Name;
 }
