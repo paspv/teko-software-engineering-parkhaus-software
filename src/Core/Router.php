@@ -17,7 +17,7 @@ class Router
         $this->routes[$pattern] = $params;
     }
 
-    public function dispatch($uri) 
+    public function dispatch(string $uri) 
     {
         $path = parse_url($uri, PHP_URL_PATH);
         $path = rtrim($path, '/') ?: '/';
@@ -25,14 +25,14 @@ class Router
         foreach ($this->routes as $pattern => $params) {
             if (preg_match($pattern, $path, $matches)) {
                 // Extract only the named variables (garageId, reportId)
-                $vars = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                $urlVariables = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
 
                 $controllerName = $params[0];
                 $methodName = $params[1];
 
                 if (class_exists($controllerName)) {
                     $controller = new $controllerName();
-                    return $controller->$methodName($vars);
+                    return $controller->$methodName($urlVariables);
                 }
             }
         }

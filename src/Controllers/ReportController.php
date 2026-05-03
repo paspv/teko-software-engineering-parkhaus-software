@@ -8,8 +8,8 @@ class ReportController
         echo "Listing all reports...";
     }
     
-    public function show($vars) 
+    public function show(array $urlVariables) 
     {
-        echo "Viewing Report ID: " . htmlspecialchars($vars['reportId']);
+        echo "Viewing Report ID: " . htmlspecialchars($urlVariables['reportId']);
     }
 }

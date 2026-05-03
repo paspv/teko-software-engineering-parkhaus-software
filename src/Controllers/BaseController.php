@@ -17,11 +17,11 @@ class BaseController
         }
     }
 
-    protected function ensureRequiredParam($param, $vars)
+    protected function ensureRequiredParam(string $param, array $urlVariables)
     {
         if (
-            !array_key_exists($param, $vars)
-            || !is_numeric($vars[$param])
+            !array_key_exists($param, $urlVariables)
+            || !is_numeric($urlVariables[$param])
         ) {
             header("HTTP/1.0 400 Bad Request");
             echo "400 - Bad Request";

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ParkingGarageModel extends BaseModel
+class ParkingSpaceStateModel extends BaseModel
 {
     public int $id;
     public string $name;

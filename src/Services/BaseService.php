@@ -8,9 +8,9 @@ use PDOStatement;
 
 class BaseService 
 {
-    private PDO $db;
-    private $modelClass = "";
-    private $tableName = "";
+    protected PDO $db;
+    protected $modelClass = "";
+    protected $tableName = "";
 
     public function __construct(string $modelClass, string $tableName)
     {
@@ -21,26 +21,29 @@ class BaseService
 
     public function getAll(): ?array
     {
-        return $this->fetchAll(
-            $this->db
-            ->query("SELECT * FROM " . $this->tableName )
-        );
+        $stmt = $this->db->prepare("SELECT * FROM " . $this->tableName );
+        $stmt->execute();
+        
+        return $this->fetchAll($stmt);
     }
 
     public function getById(int $id): ?object
     {
-        return $this->fetchOne(
-            $this->db->query("SELECT * FROM {$this->tableName} WHERE ID = {$id}")
-        );
+        $stmt = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+
+        return $this->fetchOne($stmt);
     }
 
-    private function fetchAll(PDOStatement $query): ?array
+    protected function fetchAll(PDOStatement $query): ?array
     {
         return $query->fetchAll(PDO::FETCH_CLASS, $this->modelClass);
     }
 
-    private function fetchOne(PDOStatement $query): ?object
+    protected function fetchOne(PDOStatement $query): ?object
     {
         return $query->fetchObject($this->modelClass);
     }
+
+    
 }

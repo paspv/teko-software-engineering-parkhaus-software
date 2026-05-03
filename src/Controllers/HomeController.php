@@ -7,7 +7,7 @@ use App\Services\ParkingGarageService;
 
 class HomeController extends BaseController 
 {
-    public function index($vars) 
+    public function index(array $urlVariables) 
     {
         $service = new ParkingGarageService();
         $garages = $service->getAll();

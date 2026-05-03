@@ -14,7 +14,8 @@ class App
     {
         $this->initEnvVariables();
 
-        $this->configureRouter()->dispatch($_SERVER['REQUEST_URI']);
+        $this->configureRouter()
+            ->dispatch($_SERVER['REQUEST_URI']);
     }
 
     private function initEnvVariables() 
@@ -31,7 +32,7 @@ class App
         $router->add('/', [HomeController::class, 'index']);
 
         // Garage Routes
-        $router->add('/{garageId}/entry', [ParkingGarageController::class, 'entrance']);
+        $router->add('/{garageId}/entrance', [ParkingGarageController::class, 'entrance']);
         $router->add('/{garageId}/printTicket', [ParkingGarageController::class, 'printTicket']);
         $router->add('/{garageId}/exit', [ParkingGarageController::class, 'exit']);
 

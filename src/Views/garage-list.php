@@ -15,7 +15,7 @@
 
                 <?php foreach ($garages as $garage): ?>
                     <li>
-                        <a href="/<?= $garage->id ?>/entry"><?= $garage->name ?></a>
+                        <a href="/<?= $garage->id ?>/entrance"><?= $garage->name ?></a>
                     </li>
                 <?php endforeach; ?>
             <?php endif; ?>

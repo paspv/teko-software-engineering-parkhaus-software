@@ -5,7 +5,7 @@ namespace App\Models;
 class BaseModel
 {
     /**
-     * Convert 
+     * Convert db column names to model properties 
      */
     public function __set($name, $value) 
     {
