@@ -10,11 +10,15 @@
 1. Enter directory with `cd teko-software-engineering-parkhaus-software`
 1. Run `ddev start`
 1. Run `ddev composer install`
-1. Run `ddev import-db` -> choose `db.sql` file
+1. Run `ddev import-db` -> choose `db.sql.gz` file
 
 ## Access prototype
 
 Run `ddev launch` to open the page in your browser.
+
+## Access phpmyadmin
+
+Run `ddev phpmyadmin`
 
 ## Stop the project
 
