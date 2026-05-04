@@ -1,21 +1,32 @@
 <?php include __DIR__ . '/layout/html_head.php'; ?>
 
+<?php include __DIR__ . '/layout/header.php'; ?>
+
 <?php
 /** @var App\Models\TicketModel $ticket */
+/** @var App\Models\FloorModel $floor */
+/** @var App\Models\ParkingSpaceModel $parkingSpace */
 ?>
 
 <div class="content-center-outer">
-    <div class="content-center garage-list">
+    <div class="content-center ticket-data">
         <?php if (!is_null($ticket)) : ?>
             <span class="title">Ihr Ticket:</span>
-            <ul class="parking-garage-seleciton-list">
-               <?php var_dump($ticket); ?>
-                <?php foreach (get_object_vars($ticket) as $ticket): ?>
-                    <li>
-                        <a href="/<?= "" ?>/entrance"><?= $ticket ?></a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+            <grid class="ticket-data-detail">
+                <p>Code:</p>
+                <p><?= $ticket->identifier ?></p>
+                <p>Ankunft:</p>
+                <p><?= $ticket->arrival->format('d M y H:m') ?></p>
+                <p>Stockwerk:</p>
+
+                <p><?= $floor->name ?></p>                
+                <p>Parkplatz:</p>
+                <p><?= $parkingSpace->name ?></p>
+
+            </grid>
+            <hr>
+            <a href="" class="btn">Einfahren</a>
+
         <?php else: ?>
             <p>Ein Fehler ist aufgetreten</p>
         <?php endif ?>

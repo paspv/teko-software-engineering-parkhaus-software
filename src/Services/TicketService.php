@@ -2,15 +2,11 @@
 
 namespace App\Services;
 
-use PDO;
-use App\Core\Database;
 use App\Core\Security;
+use App\Enums\ParkingSpaceStateEnum;
 use App\Models\ParkingSpaceModel;
 use App\Models\TicketModel;
-use App\Services\FloorService;
 use DateTime;
-use DateTimeImmutable;
-use stdClass;
 
 class TicketService extends BaseService
 {
@@ -21,7 +17,7 @@ class TicketService extends BaseService
 
     public function createTicket(ParkingSpaceModel $parkingSpace): ?TicketModel
     {
-        $parkingSpaceService = new ParkingGarageService();
+        $parkingSpaceService = new ParkingSpaceService();
         $security = new Security();
 
         $data = [
@@ -49,8 +45,19 @@ class TicketService extends BaseService
         /** @var TicketModel $ticket */
         $ticket = $this->getById($id);
 
-        $parkingSpaceService->updateState($ticket->parkingSpaceId, );
+        $parkingSpaceStateService = new ParkingSpaceStateService();
+        $newState = $parkingSpaceStateService->getStateByName(ParkingSpaceStateEnum::OCCUPIED->getTableName());
 
-        return $ticket;
+        if ($parkingSpaceService->updateState($ticket->parkingSpaceId, $newState->id)) {
+            return $ticket;
+        }
+
+    }
+
+    public function getByIdentifier(string $identifier) : ?TicketModel {
+        $stmt = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE identifier = :identifier");
+        $stmt->execute(['identifier' => $identifier]);
+
+        return $this->fetchOne($stmt);
     }
 }

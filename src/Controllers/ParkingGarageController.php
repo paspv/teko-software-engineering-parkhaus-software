@@ -1,13 +1,11 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\FloorModel;
+use App\Models\ParkingGarageModel;
 use App\Services\ParkingGarageService;
 use App\Services\TicketService;
 use App\Services\FloorService;
 use App\Services\ParkingSpaceService;
-use App\Models\TicketModel;
-use Exception;
 
 class ParkingGarageController extends BaseController 
 {    
@@ -32,20 +30,29 @@ class ParkingGarageController extends BaseController
         if (!$this->ensureRequiredParam('garageId', $urlVariables)) {
             return;
         }
-        
-        $garageId = $urlVariables['garageId'];
 
         $ticketService = new TicketService();
         $parkingSpaceService = new ParkingSpaceService();
+        $parkingGarageService = new ParkingGarageService();
 
-        $parkingSpace = $parkingSpaceService->chooseParkingSpace($garageId);
-        
-        if (is_null($parkingSpace)) {
-            echo "Kein Parkplatz verfügbar.";
-            return false;
+        /** @var ParkingGarageModel $garage */
+        $garage = $parkingGarageService->getById($urlVariables['garageId']);
+
+        // If user already has a ticket, load it. Otherwise create a new one.
+        if ($_COOKIE["ticket_identifier"]) {
+            $ticket = $ticketService->getByIdentifier($_COOKIE["ticket_identifier"]);
+            $parkingSpace = $parkingSpaceService->getById($ticket->parkingSpaceId);
+        } else {
+            $parkingSpace = $parkingSpaceService->chooseParkingSpace($garage->id);
+            $ticket = $ticketService->createTicket($parkingSpace);
+
+            setcookie('ticket_identifier', $ticket->identifier);
+            
+            if (is_null($parkingSpace)) {
+                echo "Kein Parkplatz verfügbar.";
+                return false;
+            }
         }
-
-        $ticket = $ticketService->createTicket($parkingSpace);
 
         if (is_null($ticket)) {
             header("HTTP/1.0 500 Internal Server Error");
@@ -53,10 +60,14 @@ class ParkingGarageController extends BaseController
             return;
         }
 
-        setcookie('ticket_identifier', $ticket->identifier);
-
+        $floorService = new FloorService();
+        $floor = $floorService->getById($parkingSpace->floorId);
+   
         $this->render('ticket-print', [
             "ticket" => $ticket,
+            "garage" => $garage,
+            "floor" => $floor,
+            "parkingSpace" => $parkingSpace
         ]);
     }
     
