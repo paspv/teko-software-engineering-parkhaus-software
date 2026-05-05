@@ -17,7 +17,7 @@ class BaseController
         }
     }
 
-    protected function ensureRequiredParam(string $param, array $urlVariables)
+    protected function ensureRequiredIntParam(string $param, array $urlVariables)
     {
         if (
             !array_key_exists($param, $urlVariables)

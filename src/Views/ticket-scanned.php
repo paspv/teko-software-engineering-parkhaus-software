@@ -2,11 +2,10 @@
 
 <?php include __DIR__ . '/layout/header.php'; ?>
 
+
 <?php
-/** @var App\Models\TicketModel $ticket */
-/** @var App\Models\FloorModel $floor */
-/** @var App\Models\ParkingGarageModel $garage */
-/** @var App\Models\ParkingSpaceModel $parkingSpace */
+/** @var TicketModel $ticket */
+/** @var ParkingGarageModel $garage */
 ?>
 
 <div class="content-center-outer">
@@ -18,15 +17,11 @@
                 <p><?= $ticket->identifier ?></p>
                 <p>Ankunft:</p>
                 <p><?= $ticket->arrival->format('d M y H:i') ?></p>
-                <p>Stockwerk:</p>
-
-                <p><?= $floor->name ?></p>                
-                <p>Parkplatz:</p>
-                <p><?= $parkingSpace->name ?></p>
-
+                <p>Abfahrt:</p>
+                <p><?= $ticket->departure->format('d M y H:i') ?></p>
             </grid>
             <hr>
-            <a href="/<?= $garage->id ?>/exit" class="btn">Einfahren</a>
+            <a href="/<?= $garage->id ?>/exit" class="btn">Ausfahren</a>
 
         <?php else: ?>
             <p>Ein Fehler ist aufgetreten</p>
@@ -35,5 +30,7 @@
 </div>
 
 
-
 <?php include __DIR__ . '/layout/html_end.php'; ?>
+
+
+

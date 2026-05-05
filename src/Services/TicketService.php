@@ -46,7 +46,7 @@ class TicketService extends BaseService
         $ticket = $this->getById($id);
 
         $parkingSpaceStateService = new ParkingSpaceStateService();
-        $newState = $parkingSpaceStateService->getStateByName(ParkingSpaceStateEnum::OCCUPIED->getTableName());
+        $newState = $parkingSpaceStateService->getStateByName(ParkingSpaceStateEnum::OCCUPIED->getDbName());
 
         if ($parkingSpaceService->updateState($ticket->parkingSpaceId, $newState->id)) {
             return $ticket;
@@ -54,10 +54,17 @@ class TicketService extends BaseService
 
     }
 
-    public function getByIdentifier(string $identifier) : ?TicketModel {
+    public function getByIdentifier(string $identifier): ?TicketModel
+    {
         $stmt = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE identifier = :identifier");
         $stmt->execute(['identifier' => $identifier]);
 
         return $this->fetchOne($stmt);
+    }
+
+    public function setDepartureTime(int $ticketId, DateTime $departureDateTime = new DateTime()): bool
+    {
+        $stmt = $this->db->prepare("UPDATE {$this->tableName} SET Departure = :departure WHERE Id = :id");
+        return $stmt->execute(['id' => $ticketId, 'departure' => $departureDateTime->format('Y-m-d H:i:s')]);
     }
 }

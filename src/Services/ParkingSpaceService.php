@@ -29,7 +29,7 @@ class ParkingSpaceService extends BaseService
         }
 
         $parkingSpaceStateService = new ParkingSpaceStateService();
-        $openState = $parkingSpaceStateService->getStateByName(ParkingSpaceStateEnum::AVAILABLE->getTableName());
+        $openState = $parkingSpaceStateService->getStateByName(ParkingSpaceStateEnum::AVAILABLE->getDbName());
 
         $placeholders = implode(',', array_fill(0, count($floorIds), '?'));
 

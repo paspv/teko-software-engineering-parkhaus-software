@@ -8,7 +8,7 @@ enum ParkingSpaceStateEnum
     case OCCUPIED;
     case RENTED;
 
-    public function getTableName(): string 
+    public function getDbName(): string 
     {
         return match($this) {
             ParkingSpaceStateEnum::AVAILABLE => 'Available',

@@ -59,7 +59,7 @@ hr {
     margin-bottom: 1.5rem;
 }
 
-a.btn {
+a.btn, button.btn {
     background-color: white;
     display: block;
     padding: 1rem;
@@ -73,6 +73,10 @@ a.btn {
     &:hover {
         background-color: var(--light-gray);
     }
+}
+
+button.btn {
+    border: none;
 }
 
 .content-center-outer {
