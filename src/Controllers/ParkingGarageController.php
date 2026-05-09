@@ -6,10 +6,12 @@ use App\Enums\ParkingSpaceStateEnum;
 use App\Models\ParkingGarageModel;
 use App\Models\ParkingSpaceStateModel;
 use App\Services\ParkingGarageService;
+use App\Services\PricingService;
 use App\Services\TicketService;
 use App\Services\FloorService;
 use App\Services\ParkingSpaceService;
 use App\Services\ParkingSpaceStateService;
+use App\Services\PaymentService;
 use DateTime;
 
 class ParkingGarageController extends BaseController
@@ -106,20 +108,21 @@ class ParkingGarageController extends BaseController
 
         $ticketService = new TicketService();
         $parkingGarageService = new ParkingGarageService();
-        $parkingSpaceService = new ParkingSpaceService();
-        $parkingSpaceStateService = new ParkingSpaceStateService();
+        $pricingService = new PricingService();
 
         /** @var ParkingGarageModel $garage */
         $garage = $parkingGarageService->getById($urlVariables['garageId']);
         $ticket = $ticketService->getByIdentifier($ticketIdentifier);
         $ticket->departure = new DateTime();
 
+        $price = $pricingService->calculatePrice($garage->id, $ticket->arrival, $ticket->departure);
 
         /** TODO Payment step */
 
         $this->render('ticket-scanned', [
             "garage" => $garage,
-            "ticket" => $ticket
+            "ticket" => $ticket,
+            "price" => $price
         ]);
     }
 
@@ -129,23 +132,33 @@ class ParkingGarageController extends BaseController
             return;
         }
 
-        if (!$ticketIdentifier = $_POST['ticketIdentifier'] ?? null) {
-            header('Location: /'. $urlVariables['garageId'] . '/entrance');
-            die();
-        }
+        $ticketIdentifier = $this->ensureRequiredFormParam($urlVariables, 'ticketIdentifier');
+        $price = (float)$this->ensureRequiredFormParam($urlVariables, 'price');
+        $departure = DateTime::createFromFormat(
+            'Y-m-d H:i:s', 
+            $this->ensureRequiredFormParam($urlVariables, 'departure')
+        );
 
         $ticketService = new TicketService();
         $parkingGarageService = new ParkingGarageService();
         $parkingSpaceService = new ParkingSpaceService();
         $parkingSpaceStateService = new ParkingSpaceStateService();
+        $paymentService = new PaymentService();
+
+        if (!$paymentService->pay($price)) {
+            echo "Zahlung fehlgeschlagen";
+            die();
+        }
 
         /** @var ParkingGarageModel $garage */
         $garage = $parkingGarageService->getById($urlVariables['garageId']);
         $ticket = $ticketService->getByIdentifier($ticketIdentifier);
-        $ticket->departure = new DateTime();
+        $ticket->departure = $departure;
 
         if (!$ticketService->setDepartureTime($ticket->id, $ticket->departure)) {
-            return;
+            header("HTTP/1.0 500 Internal Server Error");
+            echo "500 - Internal Server Error";
+            die();
         }
 
         $openState = $parkingSpaceStateService->getStateByName(
@@ -156,15 +169,16 @@ class ParkingGarageController extends BaseController
             $ticket->parkingSpaceId,
             $openState->id
         )) {
-            return;
+            header("HTTP/1.0 500 Internal Server Error");
+            echo "500 - Internal Server Error";
+            die();
         }
 
         // delete cookie by setting the expiration date to the past.
         setcookie('ticket_identifier', $ticket->identifier, time() - 3600);
 
-        $this->render('ticket-scanned', [
+        $this->render('ticket-payed', [
             "garage" => $garage,
-            "ticket" => $ticket
         ]);
     }
 }

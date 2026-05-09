@@ -8,9 +8,12 @@
     --white: white;
     --red: #dd2b0f;
     --red-hover: #ad230e;
+    --green: #2aaf10;
 
     --transition: 0.2s ease-out;
     --border-radius-text-box: 5px;
+    --status-bar-height: 64px;
+    --header-height: 62px;
 }
 
 /* styling reset */
@@ -26,12 +29,17 @@ ul {
 }
 
 /* basic styling */
+* {
+    box-sizing: border-box;
+}
+
 header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     background-color: var(--typst-blue);
     padding: 1.25rem 2rem;
     color: var(--white);
+    height: var(--header-height);
 
     a {
 
@@ -79,14 +87,49 @@ button.btn {
     border: none;
 }
 
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1rem;
+    height: var(--status-bar-height);
+    align-items: center;
+
+    .barrier-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.75em;
+    }
+
+    .barrier-state {
+        background-color: var(--red);
+        border-radius: 100%;
+        width: 2em;
+        aspect-ratio: 1;
+        display: inline-block;
+
+        +span {
+            margin: auto;
+        }
+
+        &.barrier-open {
+            background-color: var(--green);
+        }
+    }
+}
+
 .content-center-outer {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100dvh;
+    /* subtracting statusbar two times, because it is transparent. 
+    It would make the central content-box seem off-center otherwise  */
     color: var(--white);
 
     .content-center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -130,7 +173,7 @@ button.btn {
 }
 
 .ticket-data {
-    width: min(100%, 20em);
+    width: min(100%, 26em);
     background-color: var(--typst-blue);
     padding: 20px;
     border-radius: 10px;

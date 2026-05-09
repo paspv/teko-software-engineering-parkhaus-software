@@ -30,4 +30,13 @@ class BaseController
 
         return true;
     }
+
+    protected function ensureRequiredFormParam(array $urlVariables, string $identifier) 
+    {
+        if (!$value = $_POST[$identifier] ?? null) {
+            header('Location: /'. $urlVariables['garageId'] . '/entrance');
+            die();
+        }
+        return $value;
+    }
 }

@@ -6,6 +6,7 @@
 <?php
 /** @var TicketModel $ticket */
 /** @var ParkingGarageModel $garage */
+/** @var float $price */
 ?>
 
 <div class="content-center-outer">
@@ -19,9 +20,17 @@
                 <p><?= $ticket->arrival->format('d M y H:i') ?></p>
                 <p>Abfahrt:</p>
                 <p><?= $ticket->departure->format('d M y H:i') ?></p>
+                <p>Preis:</p>
+                <p><?= sprintf("%.2f", $price) ?></p>
             </grid>
             <hr>
-            <a href="/<?= $garage->id ?>/exit" class="btn">Ausfahren</a>
+
+            <form method="post" action="/<?= $garage->id ?>/payTicket">
+                <input type="hidden" name="price" value="<?= sprintf("%.2f", $price) ?>">
+                <input type="hidden" name="ticketIdentifier" value="<?= $_COOKIE['ticket_identifier'] ?>">
+                <input type="hidden" name="departure" value="<?= $ticket->departure->format('Y-m-d H:i:s') ?>">
+                <button class="btn">Bezahlen</button>
+            </form>
 
         <?php else: ?>
             <p>Ein Fehler ist aufgetreten</p>

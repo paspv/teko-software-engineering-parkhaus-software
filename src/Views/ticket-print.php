@@ -1,4 +1,5 @@
 <?php include __DIR__ . '/layout/html_head.php'; ?>
+<?php  $barrierOpen = true ?>
 
 <?php include __DIR__ . '/layout/header.php'; ?>
 
@@ -17,7 +18,7 @@
                 <p>Code:</p>
                 <p><?= $ticket->identifier ?></p>
                 <p>Ankunft:</p>
-                <p><?= $ticket->arrival->format('d M y H:i') ?></p>
+                <p><?= $ticket->arrival->format('d M Y, H:i') ?></p>
                 <p>Stockwerk:</p>
 
                 <p><?= $floor->name ?></p>                

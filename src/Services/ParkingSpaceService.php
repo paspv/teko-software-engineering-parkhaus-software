@@ -43,7 +43,7 @@ class ParkingSpaceService extends BaseService
 
         $params = array_merge($floorIds, [$openState->id]);
         $stmt->execute($params);
-
+        
         return $this->fetchOne($stmt);
     }
 

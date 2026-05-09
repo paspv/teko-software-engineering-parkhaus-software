@@ -4,16 +4,18 @@ namespace App\Services;
 
 use PDO;
 use App\Core\Database;
-use App\Models\ParkingSpaceStateModel;
+use App\Models\PricingTypeModel;
+use DateTime;
+use DateTimeImmutable;
 
-class ParkingSpaceStateService extends BaseService 
+class PricingTypeService extends BaseService 
 {
     public function __construct()
     {
-        parent::__construct(ParkingSpaceStateModel::class, "ParkingSpaceState");
+        parent::__construct(PricingTypeModel::class, "PricingType");
     }
 
-    public function getStateByName(string $name): ParkingSpaceStateModel
+    public function getTypeByName(string $name): PricingTypeModel
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE Name = :name");
         $stmt->execute(['name' => $name]);
