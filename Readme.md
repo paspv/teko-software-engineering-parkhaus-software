@@ -9,6 +9,7 @@
 1. Pull project
 1. Enter directory with `cd teko-software-engineering-parkhaus-software`
 1. Run `ddev start`
+1. Create the .env file by copying the provided example: `cp .env.example .env` 
 1. Run `ddev composer install`
 1. Run `ddev import-db` -> choose `db.sql.gz` file
 
