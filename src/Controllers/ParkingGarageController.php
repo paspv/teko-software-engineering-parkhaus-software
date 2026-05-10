@@ -117,8 +117,6 @@ class ParkingGarageController extends BaseController
 
         $price = $pricingService->calculatePrice($garage->id, $ticket->arrival, $ticket->departure);
 
-        /** TODO Payment step */
-
         $this->render('ticket-scanned', [
             "garage" => $garage,
             "ticket" => $ticket,

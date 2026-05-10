@@ -89,6 +89,9 @@ class PricingService extends BaseService
         return min($calculatedPrice, $this::FULL_DAY_FLAT_RATE);
     }
 
+    /**
+     * @source function generated using Gemini, modified by hand to fit my exact needs and ensure full understanding of the code 
+     */
     private function calculateQuarterlyRates(DateTime $arrival, DateTime $departure): float {
         $arrivalTimeStamp = $arrival->getTimestamp();
         $departureTimeStamp = $departure->getTimestamp();
@@ -107,6 +110,9 @@ class PricingService extends BaseService
         return $totalPrice;
     }
 
+    /**
+     * @source function generated using Gemini, modified by hand to fit my exact needs and ensure full understanding of the code 
+     */
     private function getTariff(string $date, string $time): float {
         $dayConfig = $this->config[$date];
         $currentTariff = 0.0;

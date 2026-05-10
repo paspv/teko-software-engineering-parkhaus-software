@@ -1,6 +1,9 @@
 <?php
 namespace App\Core;
 
+/**
+ * @source class generated using Gemini
+ */
 class Router 
 {
     protected $routes = [];
